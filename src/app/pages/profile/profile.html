@@ -1,0 +1,293 @@
+<div class="min-h-screen bg-zinc-50 pt-28 pb-12 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div
+      class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-zinc-100 flex flex-col md:flex-row items-center gap-8 mb-8"
+    >
+      <div class="relative">
+        <img
+          src="https://i.pravatar.cc/150?u=demo"
+          class="w-32 h-32 rounded-full border-4 border-pink-100 shadow-lg object-cover"
+        />
+        <span
+          class="absolute bottom-1 right-1 bg-green-500 w-6 h-6 rounded-full border-4 border-white"
+        ></span>
+      </div>
+
+      <div class="flex-1 text-center md:text-left">
+        <h1 class="text-4xl font-black text-zinc-900 tracking-tighter">Nelson Javier</h1>
+        <p class="text-zinc-500 font-medium">Amante de los animales • Cochabamba, BO</p>
+        <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
+          <span
+            class="px-4 py-1.5 bg-pink-50 text-pink-600 rounded-full text-xs font-bold uppercase tracking-wider"
+            >Donante</span
+          >
+          <span
+            class="px-4 py-1.5 bg-zinc-100 text-zinc-600 rounded-full text-xs font-bold uppercase tracking-wider"
+            >Verificado</span
+          >
+        </div>
+      </div>
+
+      <button
+        (click)="abrirModalCrear()"
+        class="bg-zinc-900 hover:bg-zinc-800 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-xl transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3"
+      >
+        <span class="text-2xl">➕</span>
+        Publicar Mascota
+      </button>
+    </div>
+
+    <div class="min-h-screen pb-12 px-4">
+      <div class="max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="md:col-span-1 space-y-6">
+            <div
+              class="bg-white/70 backdrop-blur-md p-6 rounded-[2rem] shadow-sm border border-zinc-100"
+            >
+              <h3 class="text-zinc-400 text-[10px] font-black uppercase tracking-[0.2em] mb-6">
+                Estadísticas Rápidas
+              </h3>
+
+              <div class="space-y-4">
+                <div
+                  (click)="cambiarTab('solicitudes')"
+                  class="group cursor-pointer flex justify-between items-center p-4 bg-zinc-50 rounded-2xl border border-transparent hover:border-pink-200 hover:bg-pink-50/50 transition-all duration-300 transform hover:-translate-y-1 active:scale-95"
+                >
+                  <div class="flex items-center gap-3">
+                    <span class="text-xl group-hover:rotate-12 transition-transform">📩</span>
+                    <span class="text-zinc-600 font-bold text-sm">Solicitudes</span>
+                  </div>
+                  <span class="text-pink-600 font-black text-2xl">{{ misSolicitudes.length }}</span>
+                </div>
+
+                <div
+                  (click)="cambiarTab('publicaciones')"
+                  class="group cursor-pointer flex justify-between items-center p-4 bg-zinc-50 rounded-2xl border border-transparent hover:border-zinc-300 hover:bg-white transition-all duration-300 transform hover:-translate-y-1 active:scale-95"
+                >
+                  <div class="flex items-center gap-3">
+                    <span class="text-xl group-hover:bounce transition-transform">🐾</span>
+                    <span class="text-zinc-600 font-bold text-sm">Publicaciones</span>
+                  </div>
+                  <span class="text-zinc-900 font-black text-2xl">{{
+                    misPublicaciones.length
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="md:col-span-2">
+            <div
+              class="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-xl border border-white/20 overflow-hidden min-h-[500px]"
+            >
+              <div class="flex border-b border-zinc-100 bg-zinc-50/30">
+                <button
+                  (click)="cambiarTab('solicitudes')"
+                  [class]="
+                    tabActiva === 'solicitudes'
+                      ? 'text-pink-600 border-b-2 border-pink-600 bg-white'
+                      : 'text-zinc-400 hover:bg-white/50'
+                  "
+                  class="flex-1 py-5 text-xs uppercase font-black tracking-widest transition-all duration-300"
+                >
+                  Mis Solicitudes
+                </button>
+                <button
+                  (click)="cambiarTab('publicaciones')"
+                  [class]="
+                    tabActiva === 'publicaciones'
+                      ? 'text-pink-600 border-b-2 border-pink-600 bg-white'
+                      : 'text-zinc-400 hover:bg-white/50'
+                  "
+                  class="flex-1 py-5 text-xs uppercase font-black tracking-widest transition-all duration-300"
+                >
+                  Mis Publicaciones
+                </button>
+              </div>
+
+              <div class="p-8">
+                @if (loading) {
+                  <div class="py-20 text-center animate-pulse flex flex-col items-center gap-4">
+                    <div
+                      class="w-12 h-12 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"
+                    ></div>
+                    <p class="text-zinc-400 font-bold uppercase text-[10px] tracking-widest">
+                      Sincronizando con Supabase
+                    </p>
+                  </div>
+                } @else {
+                  @if (tabActiva === 'publicaciones') {
+                    <div class="grid gap-4 animate-in fade-in slide-in-from-right-8 duration-500">
+                      @for (pet of misPublicaciones; track pet.id) {
+                        <div
+                          class="flex items-center gap-4 p-4 rounded-2xl bg-white border border-zinc-100 shadow-sm hover:shadow-md hover:border-pink-100 transition-all group cursor-pointer"
+                        >
+                          <img
+                            [src]="pet.photo_url"
+                            class="w-16 h-16 rounded-xl object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-500"
+                          />
+                          <div class="flex-1">
+                            <h4
+                              class="font-bold text-zinc-800 group-hover:text-pink-600 transition-colors"
+                            >
+                              {{ pet.name }}
+                            </h4>
+                            <p
+                              class="text-[10px] text-zinc-400 uppercase font-black tracking-widest"
+                            >
+                              Registrado el {{ pet.created_at | date: 'shortDate' }}
+                            </p>
+                          </div>
+                          <span
+                            class="text-xs font-bold text-zinc-300 group-hover:text-pink-400 transition-colors"
+                            >Ver →</span
+                          >
+                        </div>
+                      }
+                    </div>
+                  }
+
+                  @if (tabActiva === 'solicitudes') {
+                    <div class="grid gap-4 animate-in fade-in slide-in-from-left-8 duration-500">
+                      @for (solicitud of misSolicitudes; track solicitud.id) {
+                        <div
+                          class="flex items-center gap-4 p-5 rounded-3xl bg-zinc-50 border border-zinc-100 hover:bg-white transition-all duration-300"
+                        >
+                          <div class="relative">
+                            <img
+                              [src]="solicitud.pets?.photo_url"
+                              class="w-14 h-14 rounded-full object-cover ring-2 ring-white shadow-md"
+                            />
+                            <span
+                              class="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm text-[10px]"
+                              >💌</span
+                            >
+                          </div>
+                          <div class="flex-1">
+                            <h4 class="font-bold text-zinc-900 italic">
+                              Interés en {{ solicitud.pets?.name }}
+                            </h4>
+                            <p class="text-xs text-zinc-500 italic">"{{ solicitud.message }}"</p>
+                          </div>
+                          <div
+                            class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-tighter bg-amber-100 text-amber-600 shadow-sm border border-amber-200/50"
+                          >
+                            {{ solicitud.status }}
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (showModalCrear) {
+  <div
+    class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-zinc-900/60 backdrop-blur-sm"
+  >
+    <div
+      class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl animate-in zoom-in duration-300"
+    >
+      <h2 class="text-2xl font-black text-zinc-900 mb-2">Nueva Mascota 🐾</h2>
+      <p class="text-zinc-500 mb-6 italic text-sm">
+        Completa la información para que encuentren un hogar pronto.
+      </p>
+
+      <div class="space-y-4">
+        <div>
+          <label class="text-xs font-bold text-zinc-400 uppercase ml-1">Nombre</label>
+          <input
+            type="text"
+            name="name"
+            [(ngModel)]="nuevaMascota.name"
+            placeholder="Ej. Toby"
+            class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-pink-500 outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="text-xs font-bold text-zinc-400 uppercase ml-1">URL de la Foto</label>
+          <input
+            type="text"
+            name="photo_url"
+            [(ngModel)]="nuevaMascota.photo_url"
+            placeholder="https://enlace-de-la-imagen.com/foto.jpg"
+            class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-pink-500 outline-none"
+          />
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-xs font-bold text-zinc-400 uppercase ml-1">Tipo</label>
+            <select
+              name="type"
+              [(ngModel)]="nuevaMascota.type"
+              class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-pink-500 outline-none"
+            >
+              <option value="perro">Perro</option>
+              <option value="gato">Gato</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs font-bold text-zinc-400 uppercase ml-1">Género</label>
+            <select
+              name="gender"
+              [(ngModel)]="nuevaMascota.gender"
+              class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-pink-500 outline-none"
+            >
+              <option value="macho">Macho</option>
+              <option value="hembra">Hembra</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-xs font-bold text-zinc-400 uppercase ml-1">Edad (Años)</label>
+          <input
+            type="number"
+            name="age"
+            [(ngModel)]="nuevaMascota.age"
+            placeholder="0"
+            class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-pink-500 outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="text-xs font-bold text-zinc-400 uppercase ml-1"
+            >Historia / Descripción</label
+          >
+          <textarea
+            name="description"
+            [(ngModel)]="nuevaMascota.description"
+            placeholder="Cuéntanos un poco sobre su personalidad..."
+            class="w-full px-4 py-3 rounded-xl border border-zinc-200 h-24 focus:ring-2 focus:ring-pink-500 outline-none"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="flex gap-4 mt-8">
+        <button
+          (click)="cerrarModalCrear()"
+          class="flex-1 py-3 text-zinc-500 font-bold hover:text-zinc-700 transition-colors"
+        >
+          Cancelar
+        </button>
+        <button
+          (click)="guardarMascota()"
+          [disabled]="isSaving"
+          class="flex-1 bg-pink-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-pink-200 disabled:bg-zinc-400 disabled:shadow-none transform transition-transform active:scale-95"
+        >
+          {{ isSaving ? 'Publicando...' : 'Publicar Ahora' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

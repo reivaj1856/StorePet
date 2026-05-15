@@ -1,0 +1,40 @@
+<nav class="fixed top-0 w-full z-[100] px-4 py-4 transition-all duration-500">
+  <div class="max-w-7xl mx-auto bg-white/90 backdrop-blur-xl border border-zinc-200/50 rounded-2xl px-6 py-3 flex justify-between items-center shadow-xl">
+    
+    <a routerLink="/" (click)="closeMenu()" class="flex items-center gap-2 z-[110]">
+      <span class="text-2xl">🐾</span>
+      <span class="text-xl font-black tracking-tighter text-zinc-900">
+        <span class="text-pink-600">Store</span>Pet
+      </span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-10">
+      <a routerLink="/" routerLinkActive="text-pink-600" [routerLinkActiveOptions]="{exact: true}" class="text-xs uppercase font-black tracking-widest text-zinc-600 hover:text-pink-500 transition-colors">Inicio</a>
+      <a routerLink="/pets" routerLinkActive="text-pink-600" class="text-xs uppercase font-black tracking-widest text-zinc-600 hover:text-pink-500 transition-colors">Mascotas</a>
+      <a routerLink="/about" routerLinkActive="text-pink-600" class="text-xs uppercase font-black tracking-widest text-zinc-600 hover:text-pink-500 transition-colors">Nosotros</a>
+      <button routerLink="/profile" class="bg-zinc-900 text-white px-5 py-2 rounded-xl font-bold text-xs hover:bg-pink-600 transition-all transform hover:scale-105">Mi Perfil</button>
+    </div>
+
+    <button (click)="toggleMenu()" class="md:hidden p-2 text-zinc-900 z-[110] focus:outline-none">
+      <div class="w-6 h-5 flex flex-col justify-between items-center relative">
+        <span [class]="isMenuOpen ? 'rotate-45 translate-y-2' : ''" class="w-full h-0.5 bg-current transition-all duration-300"></span>
+        <span [class]="isMenuOpen ? 'opacity-0' : ''" class="w-full h-0.5 bg-current transition-all duration-300"></span>
+        <span [class]="isMenuOpen ? '-rotate-45 -translate-y-2' : ''" class="w-full h-0.5 bg-current transition-all duration-300"></span>
+      </div>
+    </button>
+  </div>
+
+  <div 
+    [class.translate-y-0]="isMenuOpen" 
+    [class.-translate-y-[150%]]="!isMenuOpen"
+    class="fixed inset-x-4 top-20 bg-white border border-zinc-100 rounded-3xl shadow-2xl p-8 flex flex-col gap-6 transition-all duration-500 ease-in-out md:hidden z-[90]">
+    
+    <a routerLink="/" (click)="closeMenu()" class="text-2xl font-black text-zinc-900 border-b border-zinc-50 pb-2">Inicio</a>
+    <a routerLink="/pets" (click)="closeMenu()" class="text-2xl font-black text-zinc-900 border-b border-zinc-50 pb-2">Mascotas</a>
+    <a routerLink="/about" (click)="closeMenu()" class="text-2xl font-black text-zinc-900 border-b border-zinc-50 pb-2">Nosotros</a>
+    
+    <button routerLink="/profile" (click)="closeMenu()" class="bg-pink-600 text-white w-full py-4 rounded-2xl font-black text-lg shadow-lg shadow-pink-200 mt-4">
+      Ir a mi Perfil 👤
+    </button>
+  </div>
+</nav>

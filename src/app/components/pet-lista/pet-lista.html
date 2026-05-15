@@ -1,0 +1,8 @@
+<!-- src/app/components/pet-list/pet-list.component.html -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
+  <app-pet-card 
+    *ngFor="let pet of pets" 
+    [pet]="pet" 
+    (select)="verDetalle(pet)">
+  </app-pet-card>
+</div>

@@ -1,3 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+/* src/styles.css */
+body {
+  margin: 0;
+  /* Un degradado sutil que va de un gris muy suave a un blanco hueso */
+  background: radial-gradient(circle at top right, #fdf2f8 0%, #f8fafc 50%, #f1f5f9 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: #1e293b; /* Texto en un tono pizarra oscuro, no negro puro */
+}
+
+/* Añadimos una textura de ruido muy sutil para que no se vea plano */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+  z-index: -1;
+}

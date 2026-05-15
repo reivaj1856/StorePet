@@ -1,0 +1,16 @@
+/* src/app/pages/pets/pets.component.css */
+:host {
+  display: block;
+  width: 100%;
+}
+
+app-pet-card {
+  display: block;
+  width: 100%;
+  /* Asegúrate de que tus cards tengan un hover bonito */
+  transition: transform 0.3s ease;
+}
+
+app-pet-card:hover {
+  transform: translateY(-5px);
+}

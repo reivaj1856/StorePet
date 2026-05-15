@@ -1,0 +1,58 @@
+<div class="relative w-full h-screen flex justify-center items-center overflow-hidden">
+  
+  <video 
+    #bgVideo
+    autoplay 
+    loop 
+    muted 
+    playsinline 
+    preload="auto"
+    [muted]="true"
+    class="absolute w-full h-full object-cover z-0">
+    <source src="/pets-bg.mp4" type="video/mp4" />
+  </video>
+
+  <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60 z-10"></div>
+
+  <div 
+    class="z-20 flex flex-col items-center gap-10 px-6 text-center"
+    [@heroFadeIn]>
+
+    <div class="flex flex-col items-center gap-4">
+      <h1 class="text-6xl md:text-7xl font-extrabold text-white tracking-tighter drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
+        <span class="text-pink-400">Store</span> Pet
+      </h1>
+      <p class="text-2xl md:text-2xl font-medium text-white drop-shadow-xl max-w-2xl px-4">
+        Donde cada mascota encuentra un hogar <span class="text-white">🐾</span> y cada familia <span class="text-pink-300 font-bold text-4xl">su compañero perfecto</span>.
+      </p>
+    </div>
+
+    <div 
+  class="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
+  [@staggerFadeIn]>
+  
+  <button 
+    class="w-64 sm:w-72 px-8 py-5 rounded-2xl bg-pink-500 hover:bg-pink-600 text-white font-bold text-xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+    routerLink="/pets">
+    <span class="flex items-center justify-center gap-3">
+      Ver Mascotas
+      <span class="text-lg"></span>
+    </span>
+  </button>
+
+  <button 
+    class="w-64 sm:w-72 px-8 py-5 rounded-2xl bg-white/20 hover:bg-white/30 text-white font-bold text-xl backdrop-blur-md shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 border border-white/30"
+    routerLink="/profile">
+    <span class="flex items-center justify-center gap-3">
+      Mi Perfil
+      <span class="text-lg"></span>
+    </span>
+  </button>
+</div>
+
+    <p class="absolute bottom-6 text-xs text-white font-medium drop-shadow-sm px-4" [@footerFadeIn]>
+      © 2026 Store Pet • Cochabamba, Bolivia • ¡Adoptar es Amar!
+    </p>
+
+  </div>
+</div>

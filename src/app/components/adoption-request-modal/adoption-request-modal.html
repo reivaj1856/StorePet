@@ -1,0 +1,33 @@
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-xl w-96 p-8 text-center shadow-lg animate-pop">
+    <img [src]="pet.photo_url" class="w-32 h-32 object-cover rounded-full mx-auto mb-4 border-4 border-pink-500" />
+    <h2 class="font-bold text-2xl mb-2">¡Adoptar a {{ pet.name }}!</h2>
+    <ng-container *ngIf="!success; else exito">
+      <textarea [(ngModel)]="message" placeholder="¿Por qué quieres adoptar?" rows="3"
+        class="w-full rounded border px-3 py-2 mb-4"></textarea>
+      <button (click)="solicitar()" class="px-5 py-2 rounded-lg bg-pink-500 text-white font-bold transition hover:bg-pink-600">
+        Solicitar adopción
+      </button>
+      <button (click)="close.emit()" class="ml-2 px-4 py-2 rounded text-gray-600 hover:bg-gray-100">
+        Cancelar
+      </button>
+    </ng-container>
+    <ng-template #exito>
+      <p class="text-emerald-500 font-bold my-4">¡Solicitud enviada!</p>
+      <button (click)="close.emit()" class="px-4 py-2 rounded bg-emerald-500 text-white font-bold hover:bg-emerald-600">
+        Cerrar
+      </button>
+    </ng-template>
+  </div>
+</div>
+
+<!-- (Opcional) Animación CSS -->
+<style>
+  .animate-pop {
+    animation: popUp 0.25s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes popUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+</style>

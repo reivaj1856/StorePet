@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+/* Animación sutil para el fondo */
+.bg-zinc-50 {
+  background-color: #f8f8f8;
+}
+
+/* Estilo para los inputs */
+input:focus, select:focus, textarea:focus {
+  border-color: transparent;
+}

@@ -1,0 +1,5 @@
+/* Asegúrate de que el body y html no limiten el alto */
+html, body {
+  height: 100%;
+  margin: 0;
+}
